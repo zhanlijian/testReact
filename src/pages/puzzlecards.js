@@ -24,8 +24,8 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class PuzzleCardsPage extends Component {
+
+class PuzzleCardsPage extends Component {
     constructor(props){
         super(props)
     }
@@ -55,3 +55,6 @@ export default class PuzzleCardsPage extends Component {
       );
     }
   }
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(PuzzleCardsPage)
