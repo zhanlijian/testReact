@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { Card, Button } from 'antd';
-import obj from '../modules/puzzlecards';
 import { connect } from 'dva';
 
 const namespace = 'puzzlecards';
 
 const mapStateToProps = (state) => {
-  console.log(state, obj, 111)
+  console.log(state)
   const cardList = state[namespace].data;
-//   const cardList = obj.state.data;
   return {
     cardList,
   };
