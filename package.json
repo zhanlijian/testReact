@@ -15,6 +15,7 @@
     "umi-plugin-react": "^1.2.3"
   },
   "dependencies": {
+    "@antv/g2": "^3.4.6",
     "antd": "^3.11.2"
   }
 }

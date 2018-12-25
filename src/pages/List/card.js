@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Table, Modal, Button, Form, Input } from 'antd'
 import { connect } from 'dva'
 
+import SampleChart from '../../components/SampleChart'
+
 function mapStateToProps(state) {
   console.log(state)
   return {
@@ -21,7 +23,7 @@ class List extends Component {
     }
   }
   showModal = () => {
-    this.setState({ visible: true })
+    this.setState({ visible: true, statisticVisible: false, id: null })
   }
   handleOk = () => {
     const {
@@ -43,14 +45,23 @@ class List extends Component {
   handleCancel = () => {
     this.setState({ visible: false })
   }
-  // componentDidMount() {
-  //   this.props.dispatch({
-  //     type: 'cards/queryList'
-  //   })
-  // }
+  showStatistic = id => {
+    this.props.dispatch({
+      type: 'cards/getStatistic',
+      payload: id
+    })
+    // 更新 state，弹出包含图表的对话框
+    this.setState({ id, statisticVisible: true })
+  }
+
+  handleStatisticCancel = () => {
+    this.setState({
+      statisticVisible: false
+    })
+  }
   render() {
     const { cardsList, cardsLoading } = this.props
-    const { visible } = this.state
+    const { visible, statisticVisible, id } = this.state
     const {
       form: { getFieldDecorator }
     } = this.props
@@ -66,6 +77,21 @@ class List extends Component {
       {
         title: '链接',
         dataIndex: 'url'
+      },
+      {
+        title: '',
+        dataIndex: '_',
+        render: (_, { id }) => {
+          return (
+            <Button
+              onClick={() => {
+                this.showStatistic(id)
+              }}
+            >
+              图表
+            </Button>
+          )
+        }
       }
     ]
     return (
@@ -98,6 +124,14 @@ class List extends Component {
               })(<Input />)}
             </FormItem>
           </Form>
+        </Modal>
+
+        <Modal
+          visible={statisticVisible}
+          footer={null}
+          onCancel={this.handleStatisticCancel}
+        >
+          <SampleChart data={statistic[id]} />
         </Modal>
       </div>
     )
