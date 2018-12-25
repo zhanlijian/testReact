@@ -5,7 +5,6 @@ import { connect } from 'dva'
 import SampleChart from '../../components/SampleChart'
 
 function mapStateToProps(state) {
-  console.log(state)
   return {
     cardsList: state.cards.cardsList,
     cardsLoading: state.loading.effects['cards/queryList']
@@ -19,7 +18,9 @@ class List extends Component {
     super(props)
 
     this.state = {
-      visible: false
+      visible: false,
+      statisticVisible: false,
+      id: 1
     }
   }
   showModal = () => {
@@ -59,12 +60,39 @@ class List extends Component {
       statisticVisible: false
     })
   }
+  componentDidUpdate(prevProps) {
+    if (prevProps.data !== this.props.data) {
+      this.refreshChart()
+    }
+  }
+  componentWillUnmount() {
+    if (this.chart) {
+      this.chart.destroy()
+    }
+  }
   render() {
     const { cardsList, cardsLoading } = this.props
     const { visible, statisticVisible, id } = this.state
     const {
       form: { getFieldDecorator }
     } = this.props
+    const statistic = [
+      [
+        { genre: 'Sports', sold: 275 },
+        { genre: 'Strategy', sold: 1150 },
+        { genre: 'Action', sold: 120 },
+        { genre: 'Shooter', sold: 350 },
+        { genre: 'Other', sold: 150 }
+      ],
+      [
+        { genre: 'Sports', sold: 275 },
+        { genre: 'Strategy', sold: 1150 },
+        { genre: 'Action', sold: 120 },
+        { genre: 'Shooter', sold: 350 },
+        { genre: 'Other', sold: 150 }
+      ]
+    ]
+    console.log(this.props)
     const columns = [
       {
         title: '名称',

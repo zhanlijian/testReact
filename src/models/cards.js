@@ -3,12 +3,21 @@ export default {
   state: {
     statisticVisible: false,
     id: 1,
-    result: [
-      { genre: 'Sports', sold: 275 },
-      { genre: 'Strategy', sold: 1150 },
-      { genre: 'Action', sold: 120 },
-      { genre: 'Shooter', sold: 350 },
-      { genre: 'Other', sold: 150 }
+    statistic: [
+      [
+        { genre: 'Sports', sold: 275 },
+        { genre: 'Strategy', sold: 1150 },
+        { genre: 'Action', sold: 120 },
+        { genre: 'Shooter', sold: 350 },
+        { genre: 'Other', sold: 150 }
+      ],
+      [
+        { genre: 'Sports', sold: 275 },
+        { genre: 'Strategy', sold: 1150 },
+        { genre: 'Action', sold: 120 },
+        { genre: 'Shooter', sold: 350 },
+        { genre: 'Other', sold: 150 }
+      ]
     ],
     cardsList: [
       {
@@ -26,6 +35,9 @@ export default {
       return {
         cardsList
       }
+    },
+    getStatistic(state, { payload: v }) {
+      return state.statistic
     }
   }
 }
